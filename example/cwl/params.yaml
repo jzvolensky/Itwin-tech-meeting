@@ -16,7 +16,7 @@ setupconfig:
 # HydroMT Data Catalog
 catalog: 
   class: File
-  path: "https://gitlab.inf.unibz.it/Juraj.Zvolensky/hydromt-cwl/-/raw/main/data_catalog.yaml"
+  path: "https://raw.githubusercontent.com/jzvolensky/Itwin-tech-meeting/main/example/data_catalog.yaml"
 # Script to update the Wflow.ini configuration file
 config_gen:
   class: File

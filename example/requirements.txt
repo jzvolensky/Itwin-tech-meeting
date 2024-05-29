@@ -12,5 +12,8 @@ stac-validator==3.3.2
 odc-geo==0.4.3
 dask[dataframe]
 requests
--e git+https://github.com/iacopoff/hydromt.git@cwl#egg=hydromt
--e git+https://github.com/clausmichele/openeo-pg-parser-networkx.git@pydantic2#egg=openeo_pg_parser_networkx
+aiohttp
+pystac
+rio-stac
+# -e git+https://github.com/iacopoff/hydromt.git@cwl#egg=hydromt
+# -e git+https://github.com/clausmichele/openeo-pg-parser-networkx.git@pydantic2#egg=openeo_pg_parser_networkx
