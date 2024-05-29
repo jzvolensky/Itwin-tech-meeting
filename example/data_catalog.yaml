@@ -252,7 +252,7 @@ rivers_lin2019:
     url: https://zenodo.org/records/3552776#.YVbOrppByUk
 hydrolakes_v10:
   data_type: GeoDataFrame
-  path: /data/hydrolakes/HydroLAKES_polys_v10.parquet
+  path: /data/hydrolakes/HydroLAKES_polys_v10.gpkg
   driver: vector
   filesystem: local
   crs: 4326
@@ -268,7 +268,7 @@ hydrolakes_v10:
     Area_avg: 1000000.0
 rgi60_global:
   data_type: GeoDataFrame
-  path: /data/rgi60_global/rgi.parquet
+  path: /data/rgi60_global/rgi.gpkg
   driver: vector
   crs: 4326
   rename:
@@ -282,7 +282,7 @@ rgi60_global:
     notes: Randolph Glacier Inventory
 grand_v1.3:
   data_type: GeoDataFrame
-  path: /data/grand/v1.3/GRanD_Version_1_3/GRanD_reservoirs_v1_3.parquet
+  path: /data/grand/v1.3/GRanD_Version_1_3/GRanD_reservoirs_v1_3.gpkg
   driver: vector
   crs: 4326
   nodata: -99
