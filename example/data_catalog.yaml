@@ -239,7 +239,7 @@ soilgrids_2020_stac:
     reference: https://www.isric.org/explore/soilgrids/faq-soilgrids#How_were_the_legends_generated
 rivers_lin2019:
   data_type: GeoDataFrame
-  path: /data/rivers_ge30m/rivers_ge30m_4326.parquet
+  path: /data/rivers_ge30m/rivers_ge30m_4326.gpkg
   driver: vector
   filesystem: local
   crs: 4326
