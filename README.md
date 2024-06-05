@@ -1,27 +1,40 @@
 # InterTwin 4th Plenary Tech Meeting Vienna
 
-## Meeting Information
-
-12th of June 2024
-
-30 minute time slot
-
 ## Contents
 
-- 20 minute presentation
-  - OpenEO overview
-    - Process Graphs, UDFs, etc.
-    - CWL integration
-    - Example use cases, images of PGs
+The `example` directory contains all of the code, DockerFile setup etc. to build and run the example application.
 
-  - OGC Application package
-    - Overview
-    - HyDroForM use case example
-    - Example of a process graph with CWL integration
+The `cwl` directory contains the CWL workflow and parameter definition to execute the example application.
 
-- 10 minute live showcase of the OGC Application Package
-  - Briefly explain the AP structure
-  - Introduce the tools again
-  - Show the steps and interface
-  - Wait for the results
-  - Show the result
+## Setup
+
+Before running the `cwl_demo.ipynb` notebook, you need to install the environemnt to run `cwltool` locally.
+
+```zsh
+conda env create -f environment.yml
+```
+
+This command will create a virtual environment called `itwintechcwl` which contains all dependencies for development and execution.
+
+Activate the environment:
+
+```zsh
+conda activate itwintechcwl
+```
+
+If you are using Visual Studio Code, you can select the environment in the editor.
+
+## Running the CWL Workflow
+
+Follow the instructions in the `cwl_demo.ipynb` notebook to run the CWL workflow.
+
+## License
+
+MIT License
+
+## Authors
+
+- Juraj Zvolensky
+  - GitHub: @jzvolensky
+  - Email: juraj.zvolensky@eurac.edu
+  - Affiliation: EURAC Research

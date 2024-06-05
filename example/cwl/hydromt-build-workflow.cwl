@@ -2,8 +2,18 @@ cwlVersion: v1.2
 $namespaces:
   s: https://schema.org/
 s:softwareVersion: 0.0.1
-schemas:
-  - http://schema.org/version/9.0/schemaorg-current-http.rdf
+s:dateCreated: '2024-06-05'
+s:keywords: Hydrology, EO, CWL, AP, InterTwin, Magic
+s:codeRepository: https://github.com/jzvolensky/Itwin-tech-meeting
+s:releaseNotes: https://github.com/jzvolensky/Itwin-tech-meeting/blob/main/README.md
+s:license: https://github.com/jzvolensky/Itwin-tech-meeting/blob/main/LICENSE
+s:author:
+  - s:name: Iacopo Federico Ferrario
+    s:email: iacopofederico.ferrario@eurac.edu
+    s:affiliation: Hydrology Magician
+  - s:name: Juraj Zvolensky
+    s:email: juraj.zvolensky@eurac.edu
+    s:affiliation: CWL Enthusiast
 
 $graph:
   - class: CommandLineTool
@@ -25,7 +35,7 @@ $graph:
           glob: "wflow.ini"
     requirements:
       DockerRequirement:
-        dockerPull: potato55/hydromt:vienna-test
+        dockerPull: potato55/hydromt:vienna
         dockerOutputDirectory: /hydromt
       NetworkAccess:
         class: NetworkAccess
@@ -57,7 +67,7 @@ $graph:
           glob: .
     requirements:
       DockerRequirement:
-        dockerPull: potato55/hydromt:vienna-test
+        dockerPull: potato55/hydromt:vienna
         dockerOutputDirectory: /hydromt
       InitialWorkDirRequirement:
         listing:
@@ -86,7 +96,7 @@ $graph:
           glob: "$(inputs.output_dir)"
     requirements:
       DockerRequirement:
-        dockerPull: potato55/hydromt:vienna-test
+        dockerPull: potato55/hydromt:vienna
         dockerOutputDirectory: /hydromt
   - class: Workflow
     id: hydromt-workflow
