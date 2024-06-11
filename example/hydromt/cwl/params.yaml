@@ -12,7 +12,7 @@ precip_fn: "cerra_land_stac"
 # Wflow.ini configuration file
 setupconfig:
   class: File
-  path: "https://gitlab.inf.unibz.it/Juraj.Zvolensky/hydromt-cwl/-/raw/main/wflow.ini"
+  path: "https://raw.githubusercontent.com/jzvolensky/Itwin-tech-meeting/main/example/hydromt/wflow.ini"
 # HydroMT Data Catalog
 catalog: 
   class: File
