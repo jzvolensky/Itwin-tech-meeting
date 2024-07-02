@@ -142,6 +142,7 @@ corine_2018_stac:
   driver: stac
   driver_kwargs:
     bands: ["corine_lcl"]
+    static: True 
   filesystem: http
   crs: 4326
   meta:
