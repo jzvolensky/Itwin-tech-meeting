@@ -35,11 +35,15 @@ $graph:
           glob: "wflow.ini"
     requirements:
       DockerRequirement:
-        dockerPull: potato55/hydromt:vienna
+        dockerPull: potato55/hydromt-demo:stac  
         dockerOutputDirectory: /hydromt
+      ResourceRequirement:
+        coresMax: 1
+        ramMax: 2048
       NetworkAccess:
         class: NetworkAccess
         networkAccess: true
+
   - class: CommandLineTool
     id: build-hydromt
     baseCommand: build
@@ -56,48 +60,76 @@ $graph:
         type: File
         inputBinding:
           position: 3
-      - id: volume_data
-        type: Directory
-        inputBinding:
-          position: 4
     outputs:
       - id: model
         type: Directory
         outputBinding:
           glob: .
+      - id: staticmaps
+        type: File
+        outputBinding:
+          glob: "model/staticmaps.nc"
+      - id: forcings
+        type: File
+        outputBinding:
+          glob: "model/forcings.nc"
     requirements:
       DockerRequirement:
-        dockerPull: potato55/hydromt:vienna
+        dockerPull: potato55/hydromt-demo:stac 
         dockerOutputDirectory: /hydromt
-      InitialWorkDirRequirement:
-        listing:
-          - entryname: /data
-            entry: $(inputs.volume_data)
+      ResourceRequirement:
+        coresMax: 1
+        ramMax: 2048
       NetworkAccess:
         class: NetworkAccess
         networkAccess: true
+
   - class: CommandLineTool
-    id: create-stac-catalog
+    id: save-to-stac
     baseCommand: ["python3", "/usr/bin/stac.py"]
     inputs:
-      - id: model
+      - id: staticmaps
+        type: File
+        inputBinding:
+          prefix: "--staticmaps_path"
+          position: 1
+      - id: forcings
+        type: File
+        inputBinding:
+          prefix: "--forcings_path"
+          position: 2
+      - id: output_dir
         type: Directory
         inputBinding:
-          position: 1
-      - id: output_dir
-        default: "./catalog"
-        type: string
-        inputBinding:
-          position: 2
+          prefix: "--output_dir"
+          position: 3
     outputs:
-      - id: catalog
+      - id: output_stac
         type: Directory
         outputBinding:
-          glob: "$(inputs.output_dir)"
+          glob: "$(inputs.output_dir.path)"
     requirements:
       DockerRequirement:
-        dockerPull: potato55/hydromt:vienna
+        dockerPull: potato55/hydromt-demo:stac  
         dockerOutputDirectory: /hydromt
+      InitialWorkDirRequirement:
+        listing:
+          - entryname: /model/output_stac
+            entry: "model/output_stac"
+            writable: true
+          - entryname: /model
+            entry: "model/"
+            writable: true
+          - entryname: /model/STAC
+            entry: "model/STAC"
+            writable: true
+      ResourceRequirement:
+        coresMax: 1
+        ramMax: 2048
+      NetworkAccess:
+        class: NetworkAccess
+        networkAccess: true
+
   - class: Workflow
     id: hydromt-workflow
     requirements:
@@ -111,15 +143,19 @@ $graph:
         type: string
       - id: catalog
         type: File
-      - id: volume_data
-        type: Directory
     outputs:
       - id: model
         type: Directory
         outputSource: build-hydromt/model
-      - id: stac_catalog
+      - id: staticmaps
+        type: File
+        outputSource: build-hydromt/staticmaps
+      - id: forcings
+        type: File
+        outputSource: build-hydromt/forcings
+      - id: output_stac
         type: Directory
-        outputSource: create-stac-catalog/catalog
+        outputSource: save-to-stac/output_stac
     steps:
       - id: update-config
         in:
@@ -137,13 +173,16 @@ $graph:
             source: update-config/setupconfig
           - id: catalog
             source: catalog
-          - id: volume_data
-            source: volume_data
-        out: [model]
+        out: [model, staticmaps, forcings]
         run: '#build-hydromt'
-      - id: create-stac-catalog
+      - id: save-to-stac
         in:
-          - id: model
+          - id: staticmaps
+            source: build-hydromt/staticmaps
+          - id: forcings
+            source: build-hydromt/forcings
+          - id: output_dir
             source: build-hydromt/model
-        out: [catalog]
-        run: '#create-stac-catalog'
+        out: [output_stac]
+        # out: [json_collection, json_items]
+        run: '#save-to-stac'
